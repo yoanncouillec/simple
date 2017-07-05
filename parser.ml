@@ -83,7 +83,7 @@ let yyact = [|
 # 10 "parser.mly"
            ( _1 )
 # 86 "parser.ml"
-               : Simple.term))
+               : Simple.expression))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
@@ -144,4 +144,4 @@ let yytables =
     Parsing.names_const=yynames_const;
     Parsing.names_block=yynames_block }
 let start (lexfun : Lexing.lexbuf -> token) (lexbuf : Lexing.lexbuf) =
-   (Parsing.yyparse yytables 1 lexfun lexbuf : Simple.term)
+   (Parsing.yyparse yytables 1 lexfun lexbuf : Simple.expression)

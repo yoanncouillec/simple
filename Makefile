@@ -1,7 +1,10 @@
-all: main
+all: eval repl
 
-main: simple.cmo parser.cmi parser.cmo lexer.cmo main.cmo
-	ocamlc -o $@ simple.cmo parser.cmo lexer.cmo main.cmo
+eval: simple.cmo parser.cmi parser.cmo lexer.cmo eval.cmo
+	ocamlc -o $@ simple.cmo parser.cmo lexer.cmo eval.cmo
+
+repl: simple.cmo parser.cmi parser.cmo lexer.cmo repl.cmo
+	ocamlc -o $@ simple.cmo parser.cmo lexer.cmo repl.cmo
 
 %.cmi: %.mli
 	ocamlc $^
@@ -27,4 +30,4 @@ main: simple.cmo parser.cmi parser.cmo lexer.cmo main.cmo
 	ocamlc -c $^
 
 clean:
-	rm -rf *.cm* main *~ \#*\# *.mli
+	rm -rf *.cm* eval repl *~ \#*\# *.mli
