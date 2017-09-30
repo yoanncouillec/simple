@@ -11,4 +11,5 @@ let _ =
   let expression = Parser.start Lexer.token lexbuf in
   let env = [] in
   let value = eval env expression in
+  print_endline (string_of_expression expression) ;
   print_string (string_of_value value) ; print_newline ()

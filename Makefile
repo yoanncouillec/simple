@@ -29,5 +29,8 @@ repl: simple.cmo parser.cmi parser.cmo lexer.cmo repl.cmo
 .ml.cmo:
 	ocamlc -c $^
 
+test: eval
+	./eval < test/app.spl
+
 clean:
 	rm -rf *.cm* eval repl *~ \#*\# *.mli
