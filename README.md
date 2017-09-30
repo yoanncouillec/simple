@@ -2,53 +2,52 @@ The Simple Programming Language
 ============
 ![Logo](simple.png)
 
-## Demo
-You can test a fully working live demo at https://antun.me/node-chat/
-- Type `/help` to get a list of the available chat commands
+## Download
+You can download the last version of the Simple Programming Language by cloning the github repository.
+
+## Build
+You can build the Simple Programing Language by compiling with:
+
+`make`
+
+## Test
+
+Then you can test with:
+
+`make test`
+
+## Execute
+
+You have two available binaries:
+
+- `eval` evaluates a Simple expression from standard input and then output the result on standard output
+- `repl` Read Eval Print Loop permits you to evaluate Simple expression from command-line
 
 ---
 
-## Features
-- Material Design
-- Emoji support
-- User @mentioning
-- Private messaging
-- Message deleting (for admins)
-- Ability to kick/ban users (for admins)
-- See other user's IPs (for admins)
-- Other awesome features yet to be implemented
+## Description
 
-.
-![User Features](http://i.imgur.com/WbF1fi2.png)
+The Simple Programming Language is a functional programming language written in OCaml.
 
-.
-![Admin Features](http://i.imgur.com/xQFaadt.png)
+It supports:
 
+- Integer
+- Variable
+- Addition
+- Lambda
+- Let
+- Application
 
-####There are 3 admin levels:
-- **Helper:** Can delete chat messages
-- **Moderator:** The above plus the ability to kick and ban users
-- **Administrator:** All the above plus send global alerts and promote/demote users
+It is untyped, supports closures and use environments.
 
----
+## Examples
 
-## Setup
-Clone this repo to your desktop and run `npm install` to install all the dependencies.
+`(lambda (x) x)` is the identity abstraction
 
-You might want to look into `config.json` to make change the port you want to use and set up a SSL certificate.
+`((lambda (x) x) 42)` applies 42 to the identity and then evaluates to 42
 
----
-
-## Usage
-After you clone this repo to your desktop, go to its root directory and run `npm install` to install its dependencies.
-
-Once the dependencies are installed, you can run  `npm start` to start the application. You will then be able to access it at localhost:3000
-
-To give yourself administrator permissions on the chat, you will have to type `/role [your-name]` in the app console.
-
----
+`(((lambda (x) (lambda (f) (f x))) 12) (lambda (a) a))` is the application function. It applies identity to 12, then returns 12.
 
 ## License
->You can check out the full license [here](https://github.com/IgorAntun/node-chat/blob/master/LICENSE)
 
-This project is licensed under the terms of the **LGPL v3** license
+This project is licensed under the terms of the **MIT*** license
