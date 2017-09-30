@@ -19,7 +19,7 @@ let rec let_remover = function
 let rec lookup env ident = 
   match env with
   | (ident',value)::rest -> if ident = ident' then value else lookup rest ident
-  | [] -> failwith "lookup: no such binding"
+  | [] -> failwith ("lookup: no such binding \""^ident^"\"")
 
 let rec eval env = function
   | Integer n -> VInt n
@@ -35,7 +35,11 @@ let rec eval env = function
       | VClosure (ident, body, env) -> eval ((ident, eval env e2)::env) body
       | _ -> failwith "eval: closure expected")
 
-let rec string_of_expression = function
+let rec string_of_env = function
+  | [] -> ""
+  | (s,v)::rest -> "("^s^","^(string_of_value v)^")"^(string_of_env rest)
+
+and string_of_expression = function
   | Integer n -> string_of_int n
   | Var s -> s
   | Add (e1, e2) -> "(+ " ^ (string_of_expression e1) ^ " " ^ 
@@ -44,9 +48,9 @@ let rec string_of_expression = function
   | Let (s, e1, e2) -> "(let (" ^ s ^ " " ^ (string_of_expression e1) ^ ") " ^ (string_of_expression e2) ^ ")"
   | App (e1, e2) -> "("^(string_of_expression e1) ^ " " ^ (string_of_expression e2)^")"
 
-let rec string_of_value = function
+and string_of_value = function
   | VInt n -> string_of_int n
-  | VClosure (ident, body, env) -> "(lambda ("^ident^") "^(string_of_expression body)^")"
+  | VClosure (ident, body, env) -> "(lambda ("^ident^") "^(string_of_expression body)^")["^(string_of_env env)^"]"
 
 and string_of_values = function
   | [] -> ""
