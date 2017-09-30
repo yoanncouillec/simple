@@ -31,6 +31,8 @@ repl: simple.cmo parser.cmi parser.cmo lexer.cmo repl.cmo
 
 test: eval
 	./eval < test/app.spl
+	./eval < test/abs.spl
+	./eval < test/int.spl
 
 clean:
 	rm -rf *.cm* eval repl *~ \#*\# *.mli
