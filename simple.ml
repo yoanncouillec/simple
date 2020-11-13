@@ -161,21 +161,30 @@ let rec unify c = match c with
           compsubst   (unify(substitute s oS2,
                              substitute s oT2)) s
 
-let rec oTYPE oC = function
+
+
+let rec type_of_term env term =
+  match term with
   | Integer n -> TInt, []
-  | Var x -> List.assoc x oC , []
-  | Lambda (x,oM) -> 
-    let alpha = gensym "a" in
-    let (sigma,s) = oTYPE ((x,TVar alpha)::oC) oM in
-    TArrow ( (try List.assoc alpha s with _ ->  TVar alpha), 
-             sigma), s
-  |  App(oM,oN) -> 
-    let (sigma,s)=oTYPE oC oM in
-    let (tau,t) = oTYPE (List.map (function (x,phi) ->
-      (x,substitute s phi)) oC) oN   in
-    let alpha=gensym "a" in 
-    let u = unify (substitute t sigma, TArrow(tau,TVar alpha))  in
-    (try List.assoc alpha u with _ ->  TVar alpha),
+  | Var s -> List.assoc s env , []
+  | Lambda (s,body) -> 
+    let name = gensym "a" in
+    let (tbody,env') = type_of_term ((s,TVar name)::env) body in
+    TArrow ((try
+               List.assoc name env'
+             with _ ->  TVar name), 
+            tbody), env'
+  |  App(e1,e2) -> 
+    let (te1,s) = type_of_term env e1 in
+    let (te2,t) =
+      type_of_term
+        (List.map
+           (function (x,phi) -> (x,substitute s phi))
+           env)
+        e2   in
+    let name = gensym "a" in 
+    let u = unify (substitute t te1, TArrow(te2,TVar name))  in
+    (try List.assoc name u with _ ->  TVar name),
     compsubst u (compsubst t s)
       
 let string_of_type t = 

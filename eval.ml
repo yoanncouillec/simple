@@ -12,7 +12,7 @@ let _ =
   let dterm = dterm_of_term Env.empty term in
   let value = interpret_dterm [] dterm in
   print_string (string_of_term term) ;
-  print_endline (" : "^string_of_type (fst(oTYPE [] term))) ;
+  print_endline (" : "^string_of_type (fst(type_of_term [] term))) ;
   print_endline("=> "^string_of_dvalue value) ;
   print_newline();
 
