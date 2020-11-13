@@ -8,8 +8,11 @@ let rec string_of_channel channel accu =
 
 let _ = 
   let lexbuf = Lexing.from_string (string_of_channel stdin "") in
-  let expression = Parser.start Lexer.token lexbuf in
-  let env = [] in
-  let value = eval env expression in
-  print_endline (string_of_expression expression) ;
-  print_string (string_of_value value) ; print_newline ()
+  let term = Parser.start Lexer.token lexbuf in
+  let dterm = dterm_of_term Env.empty term in
+  let value = interpret_dterm [] dterm in
+  print_string (string_of_term term) ;
+  print_endline (" : "^string_of_type (fst(oTYPE [] term))) ;
+  print_endline("=> "^string_of_dvalue value) ;
+  print_newline();
+

@@ -2,7 +2,7 @@
 %token<string> IDENT
 %token LAMBDA LET LPAREN RPAREN EOF
 %start start
-%type <Simple.expression> start
+%type <Simple.term> start
 
 %%
 

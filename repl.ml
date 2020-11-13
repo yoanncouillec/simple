@@ -13,10 +13,9 @@ let _ =
       flush stdout ;
       let lexbuf = Lexing.from_string (read_line ()) in
       try
-        let expression = Parser.start Lexer.token lexbuf in
-	let expression = let_remover expression in
+        let term = Parser.start Lexer.token lexbuf in
 	let env = [] in
-        let value = eval env expression in
+        let value = interpret_term env term in
         print_string "= " ; print_string (string_of_value value) ; print_newline ()
       with 
       | Failure m -> print_string "! " ; print_endline m

@@ -29,9 +29,11 @@ repl: simple.cmo parser.cmi parser.cmo lexer.cmo repl.cmo
 .ml.cmo:
 	ocamlc -c $^
 
-test: eval
-	./eval < test/app.spl
+test: eval	
 	./eval < test/abs.spl
+	./eval < test/abs2.spl
+	./eval < test/abs3.spl
+	./eval < test/app.spl
 	./eval < test/int.spl
 
 clean:
